@@ -50,6 +50,8 @@ class VitoConnect : public uart::UARTDevice, public PollingComponent {
     void set_protocol(std::string protocol) { this->protocol = protocol; }
     void register_datapoint(Datapoint *datapoint);
 
+    void set_port(uint16_t port) { this->port_ = port; }
+
     void onData(std::function<void(const uint8_t* data, uint8_t length, Datapoint* dp)> callback);
     void onError(std::function<void(uint8_t, Datapoint*)> callback);
 
@@ -84,8 +86,11 @@ class VitoConnect : public uart::UARTDevice, public PollingComponent {
     static void _onData(uint8_t* data, uint8_t len, void* arg);
     static void _onError(uint8_t error, void* arg);
 
+    uint16_t port_;
+
     std::function<void(uint8_t, Datapoint*)> _onErrorCb;
 };
 
 }  // namespace vitoconnect
 }  // namespace esphome
+
