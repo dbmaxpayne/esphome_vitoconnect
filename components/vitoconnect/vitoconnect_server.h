@@ -1,5 +1,6 @@
 #pragma once
 
+#include "esphome/components/socket/socket.h"
 #include "vitoconnect_optolink.h"
 
 namespace esphome {
