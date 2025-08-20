@@ -1,11 +1,13 @@
 import esphome.codegen as cg
 import esphome.config_validation as cv
 from esphome.components import uart
-from esphome.const import CONF_ID, CONF_PROTOCOL, CONF_UPDATE_INTERVAL
+from esphome.const import CONF_ID, CONF_PROTOCOL, CONF_UPDATE_INTERVAL, CONF_PORT
 
 CODEOWNERS = ["@dannerph"]
 
-DEPENDENCIES = ["uart"]
+AUTO_LOAD = ["socket"]
+
+DEPENDENCIES = ["uart", "network"]
 
 MULTI_CONF = True
 
@@ -25,6 +27,7 @@ CONFIG_SCHEMA = (
             cv.GenerateID(): cv.declare_id(VitoConnect),
             cv.Required(CONF_PROTOCOL): cv.enum(OPTOLINK_PROTOCOL, upper=True, space="_"),
             cv.Optional(CONF_UPDATE_INTERVAL, default="60s"): cv.positive_time_period_milliseconds,
+            cv.Optional(CONF_PORT, default=65234): cv.port,
         }
     )
     .extend(uart.UART_DEVICE_SCHEMA)
@@ -37,3 +40,4 @@ async def to_code(config):
     await uart.register_uart_device(var, config)
     cg.add(var.set_protocol(config[CONF_PROTOCOL]))
     cg.add(var.set_update_interval(config[CONF_UPDATE_INTERVAL]))
+    cg.add(var.set_port(config[CONF_PORT]))
