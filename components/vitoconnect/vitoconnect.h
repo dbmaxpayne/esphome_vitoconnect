@@ -28,6 +28,8 @@
 #include "vitoconnect_optolinkP300.h"
 #include "vitoconnect_optolinkKW.h"
 #include "vitoconnect_datapoint.h"
+#include "vitoconnect_server.h"
+
 
 using namespace std;
 
@@ -93,4 +95,5 @@ class VitoConnect : public uart::UARTDevice, public PollingComponent {
 
 }  // namespace vitoconnect
 }  // namespace esphome
+
 
