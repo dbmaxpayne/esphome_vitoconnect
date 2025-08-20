@@ -27,7 +27,7 @@ CONFIG_SCHEMA = (
             cv.GenerateID(): cv.declare_id(VitoConnect),
             cv.Required(CONF_PROTOCOL): cv.enum(OPTOLINK_PROTOCOL, upper=True, space="_"),
             cv.Optional(CONF_UPDATE_INTERVAL, default="60s"): cv.positive_time_period_milliseconds,
-            cv.Optional(CONF_PORT, default=65234): cv.port,
+            cv.Optional(CONF_PORT, default=0): cv.port,
         }
     )
     .extend(uart.UART_DEVICE_SCHEMA)
