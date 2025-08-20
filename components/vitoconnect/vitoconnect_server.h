@@ -4,7 +4,7 @@
 
 namespace esphome {
 namespace vitoconnect {
-class server : public vitoconnect {
+class OptolinkServer {
   public:
   private:
     struct Client {
