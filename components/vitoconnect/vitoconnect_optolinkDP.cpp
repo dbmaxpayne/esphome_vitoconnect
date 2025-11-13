@@ -24,6 +24,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 #include "vitoconnect_optolinkDP.h"
+#include "esphome/core/log.h"
 
 namespace esphome {
 namespace vitoconnect {
@@ -35,8 +36,10 @@ OptolinkDP::OptolinkDP(uint16_t address, uint8_t length, bool write, uint8_t* va
   data(nullptr),
   arg(arg) {
     if (write) {
+      ESP_LOGD("Test", "Test6: %02D", *value);
       data = new uint8_t[length];
       memcpy(data, value, length);
+      ESP_LOGD("Test", "Test7: %02D", *data);
     }
   }
 
@@ -54,13 +57,19 @@ OptolinkDP::OptolinkDP(const OptolinkDP& obj) {
   data = nullptr;
   arg = obj.arg;
   if (write) {
+    ESP_LOGD("Test", "Test8: %02D", *obj.data);
     data = new uint8_t[length];
     memcpy(data, obj.data, length);
+    ESP_LOGD("Test", "Test9: %02D", *data);
   }
 }
 
 OptolinkDP::~OptolinkDP() {
-  if (data) delete[] data;
+  if (data)
+  {
+      ESP_LOGD("Test", "Test10: %02X", *data);
+      //delete[] data;
+  }
 }
 
 }  // namespace vitoconnect

@@ -92,6 +92,7 @@ void OptolinkKW::_init() {
 void OptolinkKW::_idle() {
   if (_uart->available()) {
     if (_uart->read() == 0x05) {
+      ESP_LOGD(TAG, "Received 0x05");
       _lastMillis = millis();
       if (_queue.size() > 0) {
         _state = SYNC;
@@ -127,7 +128,11 @@ void OptolinkKW::_send() {
     buff[2] = address & 0xFF;
     buff[3] = length;
     // add value to message
+    ESP_LOGD("Test", "Test4 %02D", *dp->data);
+    ESP_LOGD("Test", "Test5 %02D", dp->data);
+    ESP_LOGD("Test", "Test5 %02D", &dp->data);
     memcpy(&buff[4], dp->data, length);
+    ESP_LOGD(TAG, "Test: %02X %02X %02X %02X %02X %x %d", buff[0],buff[1],buff[2],buff[3],buff[4], dp->address, length);
     _rcvLen = 1;  // expected answer length is only ACK (0x00)
     _uart->write_array(buff, 4 + length);
   } else {
@@ -138,6 +143,7 @@ void OptolinkKW::_send() {
     buff[2] = address & 0xFF;
     buff[3] = length;
     _rcvLen = length;  // expected answer length is requested length
+    ESP_LOGD(TAG, "Sending via UART: %02X %02X %02X %02X", buff[0],buff[1],buff[2],buff[3]);
     _uart->write_array(buff, 4);
   }
   _rcvBufferLen = 0;
